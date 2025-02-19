@@ -1,0 +1,71 @@
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .input,
+  .textArea,
+  .select {
+    width: 100%;
+  }
+  
+  .createButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .disclaimer {
+    font-size: 14px;
+    color: #666;
+    margin: 20px 0;
+  }
+  .advancedSettings {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .advancedButton {
+    font-size: 14px;
+    color: #1890ff;
+  }
+  
+  .textArea {
+    resize: none;
+  }
+  
+  .switch {
+    display: block;
+  }
+  
+  .upload {
+    display: flex;
+    align-items: center;
+  }
+    
