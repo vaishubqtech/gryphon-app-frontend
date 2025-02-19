@@ -1,0 +1,67 @@
+.footer {
+    background: #f8fdfa;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+  }
+  .footer-left span{
+    width: 425px;
+  }
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+  }
+  
+  .footer-left {
+    flex: 1;
+  }
+  
+  .footer-link {
+    margin-left: 50px;
+    color: #444;
+    text-decoration: underline;
+    font-size: 12px;
+    width: 100%;
+  }
+  
+  .footer-center {
+    flex: 2;
+    justify-content: center;
+  }
+  
+  .footer-center a {
+    margin: 0 10px;
+    color: #444;
+    text-decoration: none;
+  }
+  
+  .footer-right {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  
+  .crypto-badge {
+    background: #eee;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .crypto-address {
+    font-weight: bold;
+  }
+  

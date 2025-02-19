@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import styles from "../../styles/HomeDash.module.css";
+import { useNavigate } from "react-router-dom";
 
 const agents = [
   {
@@ -103,6 +104,7 @@ const agents = [
 ];
 
 const DashboardTable = () => {
+  const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('TVL');
   return (
     <div className={styles.container}>
@@ -136,7 +138,7 @@ const DashboardTable = () => {
         </thead>
         <tbody>
           {agents.map((agent) => (
-            <tr key={agent.id}>
+            <tr key={agent.id} onClick={()=>navigate("/detail-screen")}>
               <td>
                 <div className={styles.agentInfo}>
                   <img src={agent.image} alt={agent.name} className={styles.avatar} />
