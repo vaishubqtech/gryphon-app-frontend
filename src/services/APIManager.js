@@ -1,82 +1,126 @@
 
-import { ethers } from "ethers";
-
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-export async function signupAgent({ name, goal, personality, niche }) {
-    const serverUrl = `${serverURL}/api/v1/auth/agent/signup`;
-  
+  export async function getNonce  (publicAddress,chainId)  {
+    const data = {
+      walletAddress: publicAddress,
+      chainId: chainId
+    }
+    const config = {
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    };
     try {
-      const response = await fetch(serverUrl, {
-        method: "POST",
+    const url = `${serverURL}/api/v1/auth/getNonce`;
+      const response = await fetch(url, config);
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      let result = await response.json();
+      console.log("getNonce result", result);
+      return {
+        data: result.data,
+        message: result.message
+      };
+    } catch (err) {
+      console.log(err, "error");
+      return { success: false, message: err.message };
+    }
+  };
+  export async function verifyUser  (publicAddress,chainId,signature) {
+    const data = {
+      walletAddress: publicAddress,
+      chainId: chainId,
+      signature: signature
+    }
+    const config = {
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    };
+    try {
+      const url = `${serverURL}/api/v1/auth/verifyUser`;
+      const response = await fetch(url, config);
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      let result = await response.json();
+      console.log("verifyUser result", result);
+      return {
+        data: result.data,
+        message: result.message
+      };
+    } catch (err) {
+      console.log(err, "error");
+      return { success: false, message: err.message };
+    }
+  };
+
+  
+  export async function getAllAgents() {
+    try {
+      const response = await fetch(`${serverURL}/api/v1/auth/agent/getAllAgents`, {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, goal, personality, niche }),
       });
   
       if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
+        throw new Error('Network response was not ok');
       }
+  
       const result  = await response.json();
-      console.log(' signup Agent data:', result );
+      console.log('All Agent data:', result );
 
       return {
         data: result.data,
         message: result.message
       };
-    } catch (error) {
-      console.error("Signup failed:", error);
-      return { success: false, message: error.message };
+    } catch (err) {
+      console.log(err, "error");
+      return { success: false, message: err.message };
     }
   }
-  
-  export async function signupCreator({ email, password, name, walletAddress, signin_using_email }) {
-    if (!email || !password) {
-      throw new Error("Email and password are required fields.");
-    }
-  
-    if (signin_using_email) {
-      const wallet = ethers.Wallet.createRandom();
-      walletAddress = wallet.address;
-    }
-  
-    if (!walletAddress) {
-      throw new Error("Wallet address is required.");
-    }
-  
-    const serverUrl = `${ process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/auth/creator/signup`;
-  
-    const body = { email, password, name, walletAddress };
-  
+
+  export async function getAgentById(agentId) {
     try {
-      const response = await fetch(serverUrl, {
-        method: "POST",
+      const response = await fetch(`${serverURL}/api/v1/auth/agent/getAgent?id=${agentId}`, {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       });
   
       if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
+        throw new Error('Network response was not ok');
       }
   
       const result  = await response.json();
-      console.log('signup creator data:', result );
+      console.log('Agent data:', result );
 
       return {
         data: result.data,
         message: result.message
       };
-
-    } catch (error) {
-      console.error("Signup failed:", error);
-      return { success: false, message: error.message };
+    } catch (err) {
+      console.log(err, "error");
+      return { success: false, message: err.message };
     }
   }
 
+
+//dummy APIs
   export async function loginCreator({ email, password,walletAddress }) {
     const serverUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/auth/creator/login`;
     let body = { email, password,walletAddress };
@@ -134,53 +178,3 @@ export async function signupAgent({ name, goal, personality, niche }) {
     }
   }
   
-
-  export async function getAllAgents() {
-    try {
-      const response = await fetch(`${serverURL}/api/v1/auth/agent/getAllAgents`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const result  = await response.json();
-      console.log('All Agent data:', result );
-
-      return {
-        data: result.data,
-        message: result.message
-      };
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  }
-
-  export async function getAgentById(agentId) {
-    try {
-      const response = await fetch(`${serverURL}/api/v1/auth/agent/getAgent?id=${agentId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const result  = await response.json();
-      console.log('Agent data:', result );
-
-      return {
-        data: result.data,
-        message: result.message
-      };
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  }
