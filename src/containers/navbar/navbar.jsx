@@ -54,7 +54,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo} onClick={()=>navigate("/")}>
-        <span className={styles.brand}>Virtual</span>
+        <span className={styles.brand}>Gryphon</span>
         <span className={styles.subtext}>PROTOCOL</span>
       </div>
 
