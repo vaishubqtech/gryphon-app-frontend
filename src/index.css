@@ -11,3 +11,7 @@ body {
 code {
   font-family: "DM Mono", serif;
 }
+*{
+  font-family: "DM Mono", serif!important;
+
+}

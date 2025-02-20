@@ -5,7 +5,7 @@ const AIModelModal = ({ isVisible, onOk, onCancel, title, children }) => {
   return (
     <Modal
       title={title}
-      visible={isVisible}
+      open={isVisible}
       onOk={onOk}
       onCancel={onCancel}
       footer={null}

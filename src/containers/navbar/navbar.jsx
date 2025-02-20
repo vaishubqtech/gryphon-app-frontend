@@ -45,6 +45,7 @@ const Navbar = () => {
       },
     }),
     createWallet("io.metamask"),
+    createWallet("com.trustwallet.app"),
     createWallet("com.coinbase.wallet"),
     createWallet("me.rainbow"),
     createWallet("io.rabby"),
@@ -89,7 +90,7 @@ const Navbar = () => {
           connectModal={{ size: "compact" }}
           theme={"light"}
           appMetadata={{
-            name: "Virtual Protocol",
+            name: "Gryphon Protocol",
             url: "https://example.com",
           }}
         />
