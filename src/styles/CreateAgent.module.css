@@ -39,8 +39,14 @@
     width: 100%;
     padding: 10px;
     font-size: 16px;
+    background: rgb(67, 187, 194);
+    color: white;
+    font-family: "DM Mono", serif !important;
   }
-  
+  .createButton:hover{
+    background: rgba(67, 188, 194, 0.693)!important;
+    
+  }
   .disclaimer {
     font-size: 14px;
     color: #666;
