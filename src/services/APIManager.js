@@ -1,6 +1,7 @@
 
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+const serverCreatorURL = process.env.NEXT_PUBLIC_CREATOR_URL;
 
   export async function getNonce  (publicAddress,chainId)  {
     const data = {
@@ -15,7 +16,7 @@ const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
       method: "POST",
     };
     try {
-    const url = `${serverURL}/api/v1/auth/getNonce`;
+    const url = `https://81e2-124-253-165-205.ngrok-free.app/api/v1/creators/get-nounce`;
       const response = await fetch(url, config);
       
       if (!response.ok) {
@@ -47,7 +48,7 @@ const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
       method: "POST",
     };
     try {
-      const url = `${serverURL}/api/v1/auth/verifyUser`;
+      const url = `${serverCreatorURL}/api/v1/auth/verifyUser`;
       const response = await fetch(url, config);
       
       if (!response.ok) {
