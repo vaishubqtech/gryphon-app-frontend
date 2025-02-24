@@ -189,7 +189,8 @@
   
   .view-profile {
     display: inline-block;
-    color: #3498db;
+    color: #f85d4f;
+    font-weight: 500;
     text-decoration: none;
     font-size: 14px;
     margin-top: 5px;
