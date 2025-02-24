@@ -69,11 +69,12 @@
   }
   
   .create-agent {
-    background: #ddd;
+    background: #f85d4f;
     padding: 8px 15px;
     border: none;
     border-radius: 4px;
     cursor: not-allowed;
+    color: #fff;
   }
   
   .cancel {

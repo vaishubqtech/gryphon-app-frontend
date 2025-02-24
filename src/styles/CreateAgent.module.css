@@ -39,12 +39,12 @@
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    background: rgb(67, 187, 194);
+    background: #f85d4f;
     color: white;
     font-family: "DM Mono", serif !important;
   }
   .createButton:hover{
-    background: rgba(67, 188, 194, 0.693)!important;
+    background: #f85d4fbc!important;
     
   }
   .disclaimer {
@@ -75,3 +75,6 @@
     align-items: center;
   }
     
+  .ant-switch.ant-switch-checked{
+    background: #f85d4f!important
+   }

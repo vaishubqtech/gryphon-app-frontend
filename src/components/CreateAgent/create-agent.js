@@ -92,6 +92,7 @@ const CreateAgent = () => {
           type="primary"
           className={styles.createButton}
           onClick={() => setOpenCreateModal(true)}
+          style={{color:'#fff'}}
         >
           Create Agent
         </Button>
@@ -120,20 +121,20 @@ const CreateAgent = () => {
             <h4 className="payment-title">Payment Summary</h4>
             <div className="payment-item">
               <span>Agent Creation Fee</span>
-              <span>100 <span style={{ color: 'rgb(67, 187, 194)', fontWeight: 500 }}>$G</span></span>
+              <span>100 <span style={{ color: '#f85d4f', fontWeight: 500 }}>$G</span></span>
             </div>
             <div className="payment-item">
               <span>Your Initial Buy</span>
-              <span>0 <span style={{ color: 'rgb(67, 187, 194)', fontWeight: 500 }}>$G</span></span>
+              <span>0 <span style={{ color: '#f85d4f', fontWeight: 500 }}>$G</span></span>
             </div>
             <div className="payment-item total">
               <span>Total</span>
-              <span>100 <span style={{ color: 'rgb(67, 187, 194)', fontWeight: 500 }}>$G</span></span>
+              <span>100 <span style={{ color: '#f85d4f', fontWeight: 500 }}>$G</span></span>
             </div>
           </div>
 
           <div className="buttons">
-            <button className="create-agent" disabled>
+            <button className="create-agent"  >
               Create Agent
             </button>
             <button className="cancel">Cancel</button>

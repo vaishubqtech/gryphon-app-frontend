@@ -10,8 +10,17 @@ body {
 
 code {
   font-family: "DM Mono", serif;
+  color: #1e1e1e;
+
 }
 *{
   font-family: "DM Mono", serif!important;
+  color:#1e1e1e;
 
 }
+.ant-switch.ant-switch-checked{
+  background: #f85d4f!important
+ }
+/* black = #1e1e1e */
+/* white = #f5f5f5 */
+/* tomato = #f85d4f */
