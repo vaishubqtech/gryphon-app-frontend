@@ -7,6 +7,7 @@ import CreateExistingAgent from './components/CreateExistingAgent/create-existin
 import Dashboard from './pages/Dashboard';
 import DetailScreen from './components/DetailScreen/DetailScreen';
 import Footer from './containers/Footer/footer';
+import UserProfile from './components/UserProfile/user-profile';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/detail-screen/:id" element={<DetailScreen />} />
         <Route path="/create-new-agent" element={<CreateAgent />} />
         <Route path="/create-existing-agent" element={<CreateExistingAgent />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <Footer/>
     </div>

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import TradingViewChart from '../TradingView/TradingView';
 import "../../styles/detailScreen.css"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getAgentById } from '../../services/APIManager';
 import { getEllipsisTxt } from '../../utils/formatter';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { MdOutlineContentCopy } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 const DetailScreen = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
   const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,17 +18,24 @@ const DetailScreen = () => {
 
   useEffect(() => {
     if (id) {
-   
-       fetchAgent();
+
+      fetchAgent();
     }
   }, [id]);
 
 
+  const handleCopy = async () => {
+    toast.success("ERC20Address copied!", {
+      position: "top-right",
+      className: "copy-toast-message",
+    });
+  }
+
   const fetchAgent = async () => {
     try {
-    const token = localStorage.getItem("authToken");
-      const response = await getAgentById(id,token);
-      console.log("fetchAgent",response)
+      const token = localStorage.getItem("authToken");
+      const response = await getAgentById(id, token);
+      console.log("fetchAgent", response)
       if (response.success) {
         setAgent(response.data);
       } else {
@@ -48,17 +60,26 @@ const DetailScreen = () => {
           <div className="left-section">
             <div className="profile">
               <img
-                src={agent?.profileImage ? agent?.profileImage : "https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/name_ccf503ff79.jpeg" }
+                src={agent?.profileImage ? agent?.profileImage : "https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/name_ccf503ff79.jpeg"}
                 alt="Profile"
                 className="profile-img"
               />
               <div>
-              <div style={{display:'flex',marginTop:4}}>
-                <h2 className="profile-name">{agent?.name}</h2>
-                <p className="profile-symbol">${agent?.ticker}</p>
-              </div>
+                <div style={{ display: 'flex', marginTop: 4 }}>
+                  <h2 className="profile-name">{agent?.name}</h2>
+                  <p className="profile-symbol">${agent?.ticker}</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginTop: 6, zIndex: 9 }} onClick={handleCopy}>
 
-              <div className='erc20-token'>{getEllipsisTxt(agent?.erc20Address,6)}</div>
+                  <div className='erc20-token'>{getEllipsisTxt(agent?.erc20Address, 6)}</div>
+
+                  <IconContext.Provider value={{ size: '1em', color: "#404849" }} >
+                    <div style={{ marginLeft: 7,cursor:"pointer" }}>
+                      <MdOutlineContentCopy />
+                    </div>
+                  </IconContext.Provider>
+                  <ToastContainer />
+                </div>
               </div>
             </div>
             <TradingViewChart />
@@ -107,8 +128,8 @@ const DetailScreen = () => {
           {/* Developer Info Section */}
           <div className="developer-info">
             <h3>Creator Id</h3>
-            <p className="developer-id">{getEllipsisTxt(agent?.creatorId , 6)}</p>
-            <a href="#" className="view-profile">View Profile</a>
+            <p className="developer-id">{getEllipsisTxt(agent?.creatorId, 6)}</p>
+            <a href="#" className="view-profile" onClick={() => navigate("/profile")}>View Profile</a>
             <h4>{agent?.agentType}</h4>
             <p>None.</p>
           </div>

@@ -6,6 +6,9 @@ const serverCreatorURL = process.env.NEXT_PUBLIC_CREATOR_URL;
 
 const marketplace_url= "http://api.gryphon.finance/marketplace/"
 const ai_url= "http://api.gryphon.finance/ai/"
+
+
+// Marketplace API
 export async function getNonce(publicAddress, chainId) {
   const data = {
     walletAddress: publicAddress,
@@ -19,7 +22,7 @@ export async function getNonce(publicAddress, chainId) {
     method: "POST",
   };
   try {
-    const url = `${marketplace_url}v1/creators/get-nounce`;
+    const url = `${marketplace_url}api/v1/creators/get-nounce`;
     const response = await fetch(url, config);
 
     if (!response.ok) {
@@ -51,7 +54,7 @@ export async function verifyUser(publicAddress, chainId, signature) {
     method: "POST",
   };
   try {
-    const url = `${marketplace_url}v1/verify-user-signature` ;
+    const url = `${marketplace_url}api/v1/creators/verify-user-signature` ;
     const response = await fetch(url, config);
 
     if (!response.ok) {
@@ -69,8 +72,38 @@ export async function verifyUser(publicAddress, chainId, signature) {
     return { success: false, message: err.message };
   }
 };
+export async function getProfile(token) {
+
+  try {
+    const url = `${marketplace_url}api/v1/creators/profile`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    let result = await response.json();
+    console.log("getProfile result", result);
+    return {
+      data: result.data,
+      message: result.message,
+      success: result.success
+    };
+  } catch (err) {
+    console.log(err, "error");
+    return { success: false, message: err.message };
+  }
+};
 
 
+
+// AI API
 export async function getAllAgents() {
   try {
     const response = await fetch(`${ai_url}api/v1/agents`, {

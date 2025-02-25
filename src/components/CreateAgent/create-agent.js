@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Select, Button, Upload, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import styles from "../../styles/CreateAgent.module.css";
@@ -29,25 +29,25 @@ const CreateAgent = () => {
 
   const handleUpload = ({ file }) => {
     const actualFile = file.originFileObj || file; // Ensure we get the real file
-  console.log("--file--" , file)
+    console.log("--file--", file)
     if (!actualFile || !(actualFile instanceof Blob)) {
       console.error("Invalid file:", actualFile);
       return;
     }
-  
+
     const reader = new FileReader();
     reader.readAsDataURL(actualFile);
     reader.onload = () => {
       console.log("reader.result", reader.result); // Confirm reader.result is set
       setProfileImage(reader.result);
     };
-  
+
     reader.onerror = (error) => {
       console.error("Error reading file:", error);
     };
   };
-  
-  
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -76,7 +76,7 @@ const CreateAgent = () => {
           position: "top-right"
         });
         setMessage("Agent created successfully!");
-        resetForm(); 
+        resetForm();
       } else {
         toast.error("Error Notification !", {
           position: "top-right",
