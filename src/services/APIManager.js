@@ -16,7 +16,7 @@ const serverCreatorURL = process.env.NEXT_PUBLIC_CREATOR_URL;
       method: "POST",
     };
     try {
-    const url = `https://81e2-124-253-165-205.ngrok-free.app/api/v1/creators/get-nounce`;
+    const url = `http://api.gryphon.finance/marketplace/api/v1/creators/get-nounce`;
       const response = await fetch(url, config);
       
       if (!response.ok) {
@@ -48,7 +48,7 @@ const serverCreatorURL = process.env.NEXT_PUBLIC_CREATOR_URL;
       method: "POST",
     };
     try {
-      const url = `${serverCreatorURL}/api/v1/auth/verifyUser`;
+      const url = `http://api.gryphon.finance/marketplace/api/v1/creators/verify-user-signature`;
       const response = await fetch(url, config);
       
       if (!response.ok) {

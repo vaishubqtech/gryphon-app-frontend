@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Web3 from "web3";
 import { useActiveAccount } from "thirdweb/react";
 import { getNonce, verifyUser } from "../../services/APIManager";
+
 var decimalChainId;
 var publicAddress;
 
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [isCreateAgentModal, setIsCreateAgentModal] = useState(false);
   const [getNonceData, setGetNonceData] = useState();
   const [verifyUserData, setVerifyUser] = useState();
+  const [authToken, setAuthToken] = useState();
 
   const showModal = () => {
     setIsCreateAgentModal(true);
@@ -59,40 +61,43 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    getAccount();   
+    // getAccount();
   }, []);
 
   useEffect(() => {
-    const publicAddress = localStorage.getItem("publicAddress");
-
-    if (publicAddress) {
-      getNonceApi();
-      // verifyUserApi();
+    console.log("wallet address", account?.address);
+    if(account?.address){
+      getAccount();
     }
-  }, []);
-
+  }, [account]);
 
   async function getAccount() {
+    const web3 = new Web3();
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
-    publicAddress = accounts[0].toLowerCase();
-    localStorage.setItem("publicAddress", publicAddress);
+   let  public_address = accounts[0].toLowerCase();
+    localStorage.setItem("publicAddress",  web3.utils.toChecksumAddress(public_address));
     let currentChain = await window.ethereum.request({ method: "eth_chainId" });
-    decimalChainId = parseInt(currentChain, 16);
-    localStorage.setItem("chainId", decimalChainId);
-
+    let decimal_chainId = parseInt(currentChain, 16);
+    localStorage.setItem("chainId", decimal_chainId);
+    await getNonceApi()
   }
 
   const getNonceApi = async () => {
     try {
-      const nonceResult = await getNonce("0xda3b7E159f3fB7D1744673e821F22a0b961cE2B6", "2525");
+      publicAddress = localStorage.getItem("publicAddress")
+      decimalChainId = localStorage.getItem("chainId")
+      console.log("--getNonce publicAddress--", publicAddress)
+      const nonceResult = await getNonce(
+        publicAddress,
+        decimalChainId
+      );
       console.log("nonceResult", nonceResult);
       if (nonceResult.success) {
         setGetNonceData(nonceResult.data);
-       
       }
-      await verifyUserApi(nonceResult.data.nonce)
+      await verifyUserApi(nonceResult.data.nonce);
     } catch (err) {
       console.log("error in getNonce API", err);
       return;
@@ -104,19 +109,21 @@ const Navbar = () => {
       const web3 = new Web3(window.ethereum);
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const signature = await web3.eth.personal.sign(
-        web3.utils.utf8ToHex(`I am signing my one-time nonce:  ${nonce}`),
+        web3.utils.utf8ToHex(`I am signing my one-time nonce: ${nonce}`),
         publicAddress,
         ""
       );
-      console.log("signature", signature)
+      console.log("signature", signature);
       const verifyUserResult = await verifyUser(
         publicAddress,
         decimalChainId,
         signature
       );
-      console.log("verifyUserResult", verifyUserResult);
-      if(verifyUserResult.success){
-        setVerifyUser(verifyUserResult.data)
+      console.log("verifyUserResult", verifyUserResult?.data);
+      if (verifyUserResult?.data) {
+        setVerifyUser(verifyUserResult?.data);
+        setAuthToken(verifyUserResult?.data?.token);
+        localStorage.setItem("authToken", verifyUserResult?.data?.token);
       }
     } catch (err) {
       console.log("error in verifyUserApi API", err);
