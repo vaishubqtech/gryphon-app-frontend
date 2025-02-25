@@ -14,9 +14,9 @@ export const createWeb3Object = async () => {
 };
 
 export const createContractObject = async function (
-    web3Obj:any,
-    contractABI:any,
-    contractAddress:any
+    web3Obj,
+    contractABI,
+    contractAddress
   ) {
     try {
       if (web3Obj) {
@@ -33,9 +33,9 @@ export const createContractObject = async function (
   };
 
 export const getTokenBalance = async (
-    contractABI: any,
-    contractAddress: string,
-    walletAddress: any
+    contractABI,
+    contractAddress,
+    walletAddress
 ) => {
     try {
          if (typeof window !== "undefined" && window.ethereum) {
@@ -55,7 +55,7 @@ export const getTokenBalance = async (
     }
 };
 
-export const convertEthToWei = async function (valueInEth: any) {
+export const convertEthToWei = async function (valueInEth) {
     try {
         let valueInWei = [];
         for (let i = 0; i < valueInEth.length; i++) {
@@ -68,7 +68,7 @@ export const convertEthToWei = async function (valueInEth: any) {
     }
 };
 
-export const convertWeiToEth = async function (valueInWei: any) {
+export const convertWeiToEth = async function (valueInWei) {
     try {
         let valueInEth = [];
 
@@ -82,7 +82,7 @@ export const convertWeiToEth = async function (valueInWei: any) {
         return;
     }
 };
-export const convertGweiToWei = async function (valueInGwei: any) {
+export const convertGweiToWei = async function (valueInGwei) {
     try {
         let valueInWei = [];
         for (let i = 0; i < valueInGwei.length; i++) {
@@ -95,7 +95,7 @@ export const convertGweiToWei = async function (valueInGwei: any) {
     }
 };
 
-export const convertToChecksum = async function (address: any) {
+export const convertToChecksum = async function (address) {
     try {
         return Web3.utils.toChecksumAddress(address);
     } catch (error) {

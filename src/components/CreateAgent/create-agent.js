@@ -6,15 +6,17 @@ import "../../styles/agentModal.css";
 import { createAgent } from "../../services/APIManager";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { approveFactory, createAgentSC, requiredGryphonAmount } from "../../services/gryphon-web3";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateAgent = () => {
-
-
+  const navigate = useNavigate()
+  const walletAddress = localStorage.getItem("publicAddress")
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [name, setName] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState("https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/name_7c02cc545e.jpeg");
   const [erc20Address, setErc20Address] = useState("0x7A5f5CcD46EBd7aC30615836D988ca3BD57412b3 ");
   const [ticker, setTicker] = useState("");
   const [bio, setBio] = useState("");
@@ -22,9 +24,60 @@ const CreateAgent = () => {
   const [goal, setGoal] = useState("goal");
   const [personality, setPersonality] = useState("personality");
   const [niche, setNiche] = useState("niche");
-
+  const [gryphonAmountInWei, setGryphonAmountInWei] = useState()
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+
+
+  useEffect(() => {
+    reqAmountInWei()
+  }, [])
+
+
+  const reqAmountInWei = async () => {
+    try {
+      const reqAmountInWeiRes = await requiredGryphonAmount();
+      console.log("-----reqAmountInWeiRes-------", reqAmountInWeiRes.toString())
+      setGryphonAmountInWei(reqAmountInWeiRes.toString())
+    } catch (e) {
+      console.log("error in reqAmountInWei ", e)
+      return
+    }
+  }
+
+  const approve_Factory = async () => {
+    try {
+
+      const approveFactoryRes = await approveFactory(gryphonAmountInWei, walletAddress);
+      console.log("-----approveFactoryRes-------", approveFactoryRes)
+      if (approveFactoryRes) {
+        await create_agent();
+      }
+    } catch (e) {
+      console.log("error in reqAmountInWei ", e)
+      return;
+    }
+  }
+
+  const create_agent = async () => {
+    try {
+      const createAgentRes = await createAgentSC(name,bio,name,ticker,walletAddress);
+      console.log("-----createAgentRes-------", createAgentRes)
+      if(createAgentRes?.status){
+        await handleSubmit();
+      }
+    } catch (e) {
+      console.log("error in create_agent ", e)
+      return;
+    }
+  }
+
+
+  const submitWeb3 = async () => {
+    await approve_Factory();
+  }
+
 
 
   const handleUpload = ({ file }) => {
@@ -48,8 +101,7 @@ const CreateAgent = () => {
   };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {   
     setLoading(true);
     setMessage("");
 
@@ -73,9 +125,11 @@ const CreateAgent = () => {
 
       if (response.success) {
         toast.success("Agent created successfully!", {
-          position: "top-right"
+          position: "top-right",
+          className: "copy-toast-message",
         });
         setMessage("Agent created successfully!");
+        navigate("/")
         resetForm();
       } else {
         toast.error("Error Notification !", {
@@ -173,9 +227,9 @@ const CreateAgent = () => {
           type="primary"
           className={styles.createButton}
           // onClick={() => setOpenCreateModal(true)}
-          onClick={handleSubmit
+          // onClick={handleSubmit}
 
-          }
+          onClick={submitWeb3}
           style={{ color: '#fff' }}
         >
           Create Agent
