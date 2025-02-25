@@ -81,6 +81,9 @@ const Navbar = () => {
     let currentChain = await window.ethereum.request({ method: "eth_chainId" });
     let decimal_chainId = parseInt(currentChain, 16);
     localStorage.setItem("chainId", decimal_chainId);
+    if(localStorage.getItem("authToken")){
+      return;
+    }
     await getNonceApi()
   }
 

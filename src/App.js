@@ -15,7 +15,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/detail-screen" element={<DetailScreen />} />
+        <Route path="/detail-screen/:id" element={<DetailScreen />} />
         <Route path="/create-new-agent" element={<CreateAgent />} />
         <Route path="/create-existing-agent" element={<CreateExistingAgent />} />
       </Routes>

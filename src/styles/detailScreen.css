@@ -10,7 +10,7 @@
   
   @media (min-width: 768px) {
     .ds-container {
-      flex-direction: row;
+      /* flex-direction: row; */
     }
   }
   
@@ -28,6 +28,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 15px;
   }
   
   .profile-img {
@@ -39,12 +40,17 @@
   .profile-name {
     font-size: 18px;
     font-weight: bold;
+    margin: 0;
   }
   
   .profile-symbol {
     color: gray;
+    margin: 0 20px;
   }
-  
+  .erc20-token{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
   .chart-placeholder {
     margin-top: 20px;
     height: 200px;

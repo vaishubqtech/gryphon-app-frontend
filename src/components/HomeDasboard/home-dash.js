@@ -1,8 +1,10 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import styles from "../../styles/HomeDash.module.css";
 import { useNavigate } from "react-router-dom";
+import { getAllAgents } from "../../services/APIManager";
+import { getEllipsisTxt } from "../../utils/formatter";
 
-const agents = [
+const agentFeed = [
   {
     name: "G.A.M.E",
     symbol: "$GAME",
@@ -106,6 +108,32 @@ const agents = [
 const DashboardTable = () => {
   const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('TVL');
+    const [agents, setAgents] = useState([]);
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
+
+
+    useEffect(() => {  
+      fetchAgents();
+    }, []);
+
+
+    const fetchAgents = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await getAllAgents(token);
+        console.log("response", response)
+        if (response.success) {
+          setAgents(response.data);
+        } 
+      } catch (err) {
+        setError(err.message);
+        console.log("error in get All agents" , err)
+      } finally {
+        setLoading(false);
+      }
+    };
+
   return (
     <div className={styles.container}>
     <div className={styles.buttons}>
@@ -137,8 +165,33 @@ const DashboardTable = () => {
           </tr>
         </thead>
         <tbody>
-          {agents.map((agent) => (
-            <tr key={agent.id} onClick={()=>navigate("/detail-screen")}>
+          {
+            agents?.map((agent)=>(
+              <tr key={agent._id} onClick={()=>navigate(`/detail-screen/${agent._id}`)}>
+                       <td>
+                <div className={styles.agentInfo}>
+                  <img src={agent.profileImage} alt={agent.name} className={styles.avatar} />
+                  <div>
+                    <div className={styles.name}>{agent.name} ${agent.ticker}</div>
+                    <div className={styles.address}>  {getEllipsisTxt(agent.erc20Address, 6)} </div>
+                  </div>
+                </div>
+              </td>
+              <td>-</td>
+              {/* className={agent.change.includes('-') ? styles.negative : styles.positive} */}
+              <td >
+                -
+              </td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              </tr>
+            ))
+          }
+          {agentFeed?.map((agent) => (
+            <tr key={agent.id} onClick={()=>navigate(`/detail-screen/${agent.id}`)}>
               <td>
                 <div className={styles.agentInfo}>
                   <img src={agent.image} alt={agent.name} className={styles.avatar} />

@@ -1,26 +1,106 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Input, Select, Button, Upload, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import styles from "../../styles/CreateAgent.module.css";
 import "../../styles/agentModal.css";
-
+import { createAgent } from "../../services/APIManager";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateAgent = () => {
+
+
   const [openCreateModal, setOpenCreateModal] = useState(false);
-  const [agentName, setAgentName] = useState("");
+  const [name, setName] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [erc20Address, setErc20Address] = useState("0x7A5f5CcD46EBd7aC30615836D988ca3BD57412b3 ");
   const [ticker, setTicker] = useState("");
-  const [biography, setBiography] = useState("");
+  const [bio, setBio] = useState("");
   const [agentType, setAgentType] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [goal, setGoal] = useState("goal");
+  const [personality, setPersonality] = useState("personality");
+  const [niche, setNiche] = useState("niche");
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
 
   const handleUpload = ({ file }) => {
+    const actualFile = file.originFileObj || file; // Ensure we get the real file
+  console.log("--file--" , file)
+    if (!actualFile || !(actualFile instanceof Blob)) {
+      console.error("Invalid file:", actualFile);
+      return;
+    }
+  
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(actualFile);
     reader.onload = () => {
-      setProfilePicture(reader.result);
+      console.log("reader.result", reader.result); // Confirm reader.result is set
+      setProfileImage(reader.result);
     };
+  
+    reader.onerror = (error) => {
+      console.error("Error reading file:", error);
+    };
+  };
+  
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const token = localStorage.getItem("authToken");
+    // await handleUpload();
+
+    const agentData = {
+      name,
+      profileImage,
+      erc20Address,
+      ticker,
+      bio,
+      agentType,
+      goal,
+      personality,
+      niche,
+    };
+    console.log("---agentData---", agentData)
+    try {
+      const response = await createAgent(agentData, token);
+
+      if (response.success) {
+        toast.success("Agent created successfully!", {
+          position: "top-right"
+        });
+        setMessage("Agent created successfully!");
+        resetForm(); 
+      } else {
+        toast.error("Error Notification !", {
+          position: "top-right",
+        });
+        setMessage(`Error: ${response.message}`);
+      }
+    } catch (error) {
+      setMessage(`Request failed: ${error.message}`);
+      console.error("API error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setName("");
+    setProfileImage("");
+    setErc20Address("");
+    setTicker("");
+    setBio("");
+    setAgentType("");
+    setGoal("");
+    setPersonality("");
+    setNiche("");
   };
 
 
@@ -31,8 +111,8 @@ const CreateAgent = () => {
         <div className={styles.formGroup}>
           <label className={styles.label}>AI Agent Name *</label>
           <Input
-            value={agentName}
-            onChange={(e) => setAgentName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Agent Name"
             className={styles.input}
           />
@@ -51,8 +131,8 @@ const CreateAgent = () => {
         <div className={styles.formGroup}>
           <label className={styles.label}>AI Agent Biography *</label>
           <TextArea
-            value={biography}
-            onChange={(e) => setBiography(e.target.value)}
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
             placeholder="This is the short bio that will be shown at your agent's profile."
             rows={4}
             className={styles.textArea}
@@ -68,12 +148,13 @@ const CreateAgent = () => {
             onChange={(value) => setAgentType(value)}
           >
             <Option value="None">None</Option>
-            <Option value="Informative">Informative</Option>
+            <Option value="on-chain">On-chain</Option>
+            <Option value="informative">Informative</Option>
             <Option value="Productivity">Productivity</Option>
             <Option value="Entertainment">Entertainment</Option>
+            <Option value="Creative">Creative</Option>
           </Select>
         </div>
-
         <div className={styles.formGroup}>
           <label className={styles.label}>AI Agent Profile Picture *</label>
           <Upload beforeUpload={() => false} onChange={handleUpload}>
@@ -91,12 +172,15 @@ const CreateAgent = () => {
         <Button
           type="primary"
           className={styles.createButton}
-          onClick={() => setOpenCreateModal(true)}
-          style={{color:'#fff'}}
+          // onClick={() => setOpenCreateModal(true)}
+          onClick={handleSubmit
+
+          }
+          style={{ color: '#fff' }}
         >
           Create Agent
         </Button>
-
+        <ToastContainer />
         <Modal
           title=""
           open={openCreateModal}
