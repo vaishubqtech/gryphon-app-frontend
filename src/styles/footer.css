@@ -65,3 +65,40 @@
     font-weight: bold;
   }
   
+  @media screen and (max-width:968px) {
+    .footer-content{
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+    }
+    .footer-center a{
+      margin: 0;
+    }
+    .footer-left span{
+      width: auto;
+    }
+    .footer-link{
+      margin-left: 0;
+      width: auto;
+      margin-top: 15px;
+    }
+    .footer-center{
+      margin: 15px 0;
+      flex-direction: column;
+      align-items: baseline;
+
+    }
+    .footer-right{
+      margin-bottom: 30px;
+      flex-direction: column;
+      align-items: baseline;
+    }
+    .footer-left {
+      flex: 1 1;
+      flex-direction: column;
+      align-items: baseline;
+  }
+  .crypto-badge{
+    margin-left: 0;
+  }
+  }

@@ -12,7 +12,7 @@ const ai_url= "http://api.gryphon.finance/ai/"
 export async function getNonce(publicAddress, chainId) {
   const data = {
     walletAddress: publicAddress,
-    chainId: chainId
+    chainId: "2525"
   }
   const config = {
     body: JSON.stringify(data),
@@ -43,7 +43,7 @@ export async function getNonce(publicAddress, chainId) {
 export async function verifyUser(publicAddress, chainId, signature) {
   const data = {
     walletAddress: publicAddress,
-    chainId: chainId,
+    chainId: "2525",
     signature: signature
   }
   const config = {

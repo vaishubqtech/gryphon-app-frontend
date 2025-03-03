@@ -50,13 +50,10 @@ const DetailScreen = () => {
     }
   };
 
-
-
-
   return (
     <div className="ds-container">
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex' }}>
+        <div className='ds-flex'>
           <div className="left-section">
             <div className="profile">
               <img

@@ -1,114 +1,120 @@
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f5fdfd; 
-    padding: 10px 20px;
-  }
-  
-  .logo {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-  }
-  
-  .brand {
-    font-size: 24px;
-    font-weight: 500;
-    color: #f85d4f!important;
-  }
-  
-  .subtext {
-    font-size: 10px;
-    color: #777;
-  }
-  
-  .navLinks {
-    display: flex;
-    list-style: none;
-    gap: 15px;
-  }
-  
-  .navLinks li a {
-    text-decoration: none;
-    font-size: 14px;
-    color: #333;
-    transition: color 0.3s ease;
-  }
-  
-  .navLinks li a:hover {
-    color: #f85d4f;
-  }
-  
-  .searchContainer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .searchInput {
-    font-family: "DM Mono", serif!important;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    border-radius: 20px;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  .actionButtons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .createButton {
-    font-family: "DM Mono", serif!important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5fdfd;
+  padding: 10px 20px;
+}
 
-    background:linear-gradient(92.8deg, #f45e51 -2%, rgb(218 175 140) 100%);
-    border: none;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .connectButton {
-    background: #333;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  /* Modal CSS */
+.logo {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
 
-  .modalContent {
-    display: flex;
-    justify-content: space-around;
-margin: 40px auto 20px; 
+.brand {
+  font-size: 24px;
+  font-weight: 500;
+  color: #f85d4f !important;
+}
+
+.subtext {
+  font-size: 10px;
+  color: #777;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+}
+
+.navLinks li a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.navLinks li a:hover {
+  color: #f85d4f;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.searchInput {
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.createButton {
+  font-family: "DM Mono", serif !important;
+
+  background: linear-gradient(92.8deg, #f45e51 -2%, rgb(218 175 140) 100%);
+  border: none;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.connectButton {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Modal CSS */
+
+.modalContent {
+  display: flex;
+  justify-content: space-around;
+  margin: 40px auto 20px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.option:hover {
+  background-color: #f9f9f9;
+  border-color: #1890ff;
+}
+
+.icon {
+  font-size: 28px;
+  color: #1890ff;
+  margin-bottom: 8px;
+}
+@media screen and (max-width: 968px) {
+  .navLinks,.searchInput {
+    display: none;
   }
-  
-  .option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.3s;
+  .createButton{
+    display: none;
   }
-  
-  .option:hover {
-    background-color: #f9f9f9;
-    border-color: #1890ff;
-  }
-  
-  .icon {
-    font-size: 28px;
-    color: #1890ff;
-    margin-bottom: 8px;
-  }
-  
+}

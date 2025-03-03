@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "antd";
+import { Tooltip , Modal } from "antd";
 import styles from "../../styles/Navbar.module.css";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { createThirdwebClient } from "thirdweb";
@@ -142,9 +142,11 @@ const Navbar = () => {
       </div>
 
       <ul className={styles.navLinks}>
+      <Tooltip title="Coming Soon!">
         <li>
           <Link href="#">Sentient</Link>
         </li>
+        </Tooltip>
         <li>
           <Link href="#">Prototype</Link>
         </li>
