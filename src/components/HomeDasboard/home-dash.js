@@ -38,76 +38,7 @@ const agentFeed = [
     mindshare: "8.79%",
     impEng: "23.8m/154.2k",
   },
-  {
-    name: "Luna",
-    symbol: "$LUNA",
-    image: 'https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/luna_0a1ba65b1f.png',
-    address: "0x55CD...247EE4",
-    category: "Entertainment",
-    marketCap: "$36.05m",
-    change: "+4.77%",
-    tvl: "$6.97m",
-    holders: "287,175",
-    volume: "$477.69k",
-    mindshare: "0.52%",
-    impEng: "307.2k/5.4k",
-  },
-  {
-    name: "Prefrontal Cortex",
-    symbol: "$CONVO",
-    image: 'https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/Convo_Agent_89ef084f87.png',
-    address: "0xab...d9c0D",
-    category: "Productivity",
-    marketCap: "$6.6m",
-    change: "+14.12%",
-    tvl: "$3.1m",
-    holders: "287,175",
-    volume: "$477.69k",
-    mindshare: "7.75%",
-    impEng: "0/0",
-  },
-  {
-    name: "VaderAI",
-    symbol: "$VADER",
-    image: 'https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/photo_2024_12_03_19_27_39_7c2f035dea.jpeg',
-    address: "0x4F9F...D1A825",
-    category: "Productivity",
-    marketCap: "$403.44m",
-    change: "+4.22%",
-    tvl: "$6.98m",
-    holders: "275,239",
-    volume: "$1.13m",
-    mindshare: "8.79%",
-    impEng: "23.8m/154.2k",
-  },
-  {
-    name: "Iona ",
-    symbol: "$IONA",
-    image: 'https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/iona_cdbbcdae41.png',
-    address: "0x55CD...247EE4",
-    category: "Entertainment",
-    marketCap: "$36.05m",
-    change: "+4.77%",
-    tvl: "$6.97m",
-    holders: "287,175",
-    volume: "$477.69k",
-    mindshare: "0.52%",
-    impEng: "307.2k/5.4k",
-  },
-  {
-    name: "TracyAI ",
-    symbol: "$TRACY",
-    image: 'https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/name_ccf503ff79.jpeg',
-    address: "0xab...d9c0D",
-    category: "Productivity",
-    marketCap: "$6.6m",
-    change: "+14.12%",
-    tvl: "$3.1m",
-    holders: "287,175",
-    volume: "$477.69k",
-    mindshare: "7.75%",
-    impEng: "0/0",
-  },
+
 ];
 
 const DashboardTable = () => {
@@ -167,49 +98,96 @@ const DashboardTable = () => {
             <tr>
               <th>AI Agents</th>
               <th>Market Cap</th>
+              <th>Token Price</th>
               <th>24h Chg</th>
-              <th>TVL</th>
-              <th>Holders</th>
               <th>24h Vol</th>
-              <th>Mindshare</th>
-              <th>Imp/Eng</th>
+              <th>Top 10</th>
+              <th>Holders</th>
+              <th>Created At</th>
             </tr>
           </thead>
           <tbody>
             {
-              agents?.map((agent) => (
-                <tr key={agent._id} onClick={() => navigate(`/detail-screen/${agent._id}`)}>
-                  <td>
-                    <div className={styles.agentInfo}>
-                      <img src={agent.profileImage} alt={agent.name} className={styles.avatar} />
-                      <div>
-                        <div className={styles.name}>{agent.name} ${agent.ticker}</div>
+              agents?.map((agent) => {
+                let timeStamp;
+                const now = new Date();
+                const past = new Date(agent?.createdAt);
+                const diffInSeconds = Math.floor((now - past) / 1000);
 
-                        <div style={{ display: 'flex', alignItems: 'center', marginTop: 6, zIndex: 9 }} onClick={handleCopy}>
-                          <div className={styles.address}>  {getEllipsisTxt(agent.erc20Address, 6)} </div>
-                          <IconContext.Provider value={{ size: '0.8em', color: "#404849" }} >
-                            <div style={{ marginLeft: 7 }}>
-                              <MdOutlineContentCopy />
+                if (diffInSeconds < 60) {
+                  timeStamp = `${diffInSeconds} seconds ago`;
+                }
+
+                const diffInMinutes = Math.floor(diffInSeconds / 60);
+                if (diffInMinutes < 60) {
+                  timeStamp = `${diffInMinutes} minutes ago`;
+                }
+
+                const diffInHours = Math.floor(diffInMinutes / 60);
+                if (diffInHours < 24) {
+                  timeStamp = `${diffInHours} hours ago`;
+                }
+
+                const diffInDays = Math.floor(diffInHours / 24);
+                if (diffInDays < 30) {
+                  timeStamp = `${diffInDays} days ago`;
+                }
+
+                const diffInMonths = Math.floor(diffInDays / 30);
+                if (diffInMonths < 12) {
+                  timeStamp = `${diffInMonths} months ago`;
+                }
+
+
+
+                return (
+
+                  <tr key={agent._id} onClick={() => navigate(`/detail-screen/${agent._id}`)}>
+                    <td>
+                      <div className={styles.agentInfo}>
+                        <div className={styles.profileContainer}>
+                          <img src={agent.profileImage} alt={agent.name} className={styles.profileImg} />
+                          <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="Token" className={styles.tokenIcon} />
+                        </div>
+                        {/* <img src={agent.profileImage} alt={agent.name} className={styles.avatar} /> */}
+                        <div>
+                          <div className={styles.name}>{agent.name} <span className={styles.spanTicker}>${agent.ticker}</span></div>
+                          <div style={{ display: 'flex', alignItems: 'center',marginTop: 6, }}>
+                            <div style={{ display: 'flex', alignItems: 'center',  zIndex: 9 }} className={styles.ercAddr} onClick={handleCopy}>
+                              <div className={styles.address}>  {getEllipsisTxt(agent.erc20Address, 6)} </div>
+                              <IconContext.Provider value={{ size: '0.8em', color: "#404849" }} >
+                                <div style={{ marginLeft: 7 }}>
+                                  <MdOutlineContentCopy />
+                                </div>
+                              </IconContext.Provider>
+                              <ToastContainer />
                             </div>
-                          </IconContext.Provider>
-                               <ToastContainer />
+                            {agent?.agentType && <div className={styles.agentType}>  {agent?.agentType} </div>}
+
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>-</td>
-                  {/* className={agent.change.includes('-') ? styles.negative : styles.positive} */}
-                  <td >
-                    -
-                  </td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-              ))
+                    </td>
+                    <td>${agent?.mcapInVirtual ? agent.mcapInVirtual : 0}</td>
+                    {/* className={agent.change.includes('-') ? styles.negative : styles.positive} */}
+                    {/* need token price */}
+                    <td >
+                      $0
+                    </td>
+                    {/* need 24h  */}
+                    <td>0%</td>
+                    {/* need 24vol */}
+                    <td>$0</td>
+                    {/*need top 10  */}
+                    <td>0%</td>
+                    {/* need holders */}
+                    <td>0</td>
+                    <td>{timeStamp ? timeStamp : '-'}</td>
+                  </tr>
+                )
+              })
             }
+            <tr>Sample data</tr>
             {agentFeed?.map((agent) => (
               <tr key={agent.id} onClick={() => navigate(`/detail-screen/${agent.id}`)}>
                 <td>

@@ -1,0 +1,34 @@
+[
+    {
+      "_id": "65e43a8b1234567890abcdef",
+      "creatorId": "65e43a8b0987654321fedcba",
+      "name": "Finance Expert",
+      "profileImage": "https://example.com/profile.jpg",
+      "erc20Address": "0x1234567890abcdef...",
+      "ticker": "FINEX",
+      "bio": "Expert in financial analysis and advice",
+      "agentType": "informative",
+      "goal": "Help users with financial decisions",
+      "personality": "Professional and analytical",
+      "niche": "Finance",
+      "stats": {
+        "_id": "65e43a8b2468135790fedcba",
+        "agentId": "65e43a8b1234567890abcdef",
+        "virtualTokenValue": "0",
+        "holderCount": 0,
+        "mcapInVirtual": 0,
+        "status": "UNDERGRAD",
+        "category": "IP MIRROR",
+        "role": "INFORMATION",
+        "socials": {
+          "TWITTER": null,
+          "TELEGRAM": null
+        },
+        "firstMessage": "",
+        "aidesc": "",
+        "createdAt": "2024-03-03T08:41:59.250Z",
+        "updatedAt": "2024-03-03T08:41:59.250Z"
+      },
+      "createdAt": "2024-03-03T08:41:59.250Z"
+    }
+  ]

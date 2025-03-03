@@ -252,7 +252,7 @@ const CreateAgent = () => {
             <label className="section-title">VIRTUAL</label>
             <input type="text" className="input" value="0" readOnly />
             <p className="receive-info">You will receive 0 🦅 (0%)</p>
-            <p className="trading-fee">Trading Fee ⓘ</p>
+            <p className="trading-fee" >Trading Fee </p>
           </div>
 
           <div className="payment-summary">
