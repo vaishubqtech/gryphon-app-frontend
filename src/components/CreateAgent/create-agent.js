@@ -16,7 +16,7 @@ const CreateAgent = () => {
   const walletAddress = localStorage.getItem("publicAddress")
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [name, setName] = useState("");
-  const [profileImage, setProfileImage] = useState("https://s3.ap-southeast-1.amazonaws.com/virtualprotocolcdn/name_7c02cc545e.jpeg");
+  const [profileImage, setProfileImage] = useState("https://thumbs.dreamstime.com/b/image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-outlined-style-no-found-white-332183016.jpg");
   const [erc20Address, setErc20Address] = useState("0x7A5f5CcD46EBd7aC30615836D988ca3BD57412b3 ");
   const [ticker, setTicker] = useState("");
   const [bio, setBio] = useState("");
@@ -227,9 +227,9 @@ const CreateAgent = () => {
           type="primary"
           className={styles.createButton}
           // onClick={() => setOpenCreateModal(true)}
-          // onClick={handleSubmit}
+          onClick={handleSubmit}
 
-          onClick={submitWeb3}
+          // onClick={submitWeb3}
           style={{ color: '#fff' }}
         >
           Create Agent

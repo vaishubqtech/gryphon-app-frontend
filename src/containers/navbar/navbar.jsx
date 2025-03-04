@@ -193,10 +193,7 @@ const Navbar = () => {
               <RocketOutlined className={styles.icon} />
               <div>Launch a New Token</div>
             </div>
-            <div className={styles.option} onClick={handleExistingToken}>
-              <DollarOutlined className={styles.icon} />
-              <div>I have my Own Token</div>
-            </div>
+
           </div>
         </Modal>
       </div>

@@ -162,13 +162,14 @@ const DashboardTable = () => {
                               </IconContext.Provider>
                               <ToastContainer />
                             </div>
-                            {agent?.agentType && <div className={styles.agentType}>  {agent?.agentType} </div>}
+                            {agent?.agentType && <div className={styles.agentType}>  {agent?.stats?.role} </div>}
 
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>${agent?.mcapInVirtual ? agent.mcapInVirtual : 0}</td>
+                    
+                    {agent?.stats ? <td>${agent?.stats?.mcapInVirtual}</td> : <td>-</td> }
                     {/* className={agent.change.includes('-') ? styles.negative : styles.positive} */}
                     {/* need token price */}
                     <td >
@@ -180,8 +181,9 @@ const DashboardTable = () => {
                     <td>$0</td>
                     {/*need top 10  */}
                     <td>0%</td>
-                    {/* need holders */}
-                    <td>0</td>
+                
+                <td>{agent?.stats ? agent?.stats?.holderCount: "-"}</td>
+                    
                     <td>{timeStamp ? timeStamp : '-'}</td>
                   </tr>
                 )
