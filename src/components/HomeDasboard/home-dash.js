@@ -7,6 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { IconContext } from "react-icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CandlestickChart from "../CandlestickChart/CandlestickChart";
 
 
 const agentFeed = [
@@ -92,6 +93,8 @@ const DashboardTable = () => {
           Market Cap
         </button>
       </div>
+
+      <CandlestickChart/>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>

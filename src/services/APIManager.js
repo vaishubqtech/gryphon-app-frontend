@@ -18,8 +18,11 @@ export async function getNonce(publicAddress, chainId) {
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Origin": "*",
     },
     method: "POST",
+    
   };
   try {
     const url = `${marketplace_url}api/v1/creators/get-nounce`;
@@ -49,9 +52,12 @@ export async function verifyUser(publicAddress, chainId, signature) {
   const config = {
     body: JSON.stringify(data),
     headers: {
+      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
     },
     method: "POST",
+    
   };
   try {
     const url = `${marketplace_url}api/v1/creators/verify-user-signature` ;
@@ -77,8 +83,10 @@ export async function getProfile(token) {
   try {
     const url = `${marketplace_url}api/v1/creators/profile`;
     const response = await fetch(url, {
-      method: 'GET',
+      method: 'GET', 
       headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`,
       },
@@ -108,7 +116,10 @@ export async function getAllAgents() {
   try {
     const response = await fetch(`${ai_url}api/v1/agents`, {
       method: 'GET',
+      
       headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
       },
     });
@@ -135,7 +146,10 @@ export async function getAgentById(agentId,token) {
   try {
     const response = await fetch(`${ai_url}api/v1/agents/${agentId}`, {
       method: 'GET',
+      
       headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`,
       },
@@ -165,7 +179,10 @@ export async function createAgent(agentData, token) {
   try {
     const response = await fetch(`${ai_url}api/v1/agents`, {
       method: "POST",
+      
       headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },

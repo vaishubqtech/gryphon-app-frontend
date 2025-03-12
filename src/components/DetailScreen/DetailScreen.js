@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MdOutlineContentCopy } from "react-icons/md";
 import { IconContext } from "react-icons";
 import { FaExternalLinkAlt, FaTimes, FaGithub, FaPaperPlane } from "react-icons/fa";
+import CandlestickChart from '../CandlestickChart/CandlestickChart';
 
 const DetailScreen = () => {
   const navigate = useNavigate()
@@ -68,8 +69,8 @@ const DetailScreen = () => {
                 />
                 <div>
                   <div style={{ display: 'flex', marginTop: 4 }}>
-                    <h2 className="profile-name">{agent?.name}</h2>
-                    <p className="profile-symbol">${agent?.ticker}</p>
+                    <h2 className="profile-name">{agent?.name ? agent?.name : "Agent Name"}</h2>
+                    <p className="profile-symbol">${agent?.ticker ? agent?.ticker : "AGT"}</p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', marginTop: 6, zIndex: 9 }} onClick={handleCopy}>
 
@@ -84,7 +85,8 @@ const DetailScreen = () => {
                   </div>
                 </div>
               </div>
-              <TradingViewChart />
+              {/* <TradingViewChart /> */}
+              <CandlestickChart/>
             </div>
             <div className="ascension-progress">
               <h3>Ascension Progress <span className="progress-value">0.14%</span></h3>
