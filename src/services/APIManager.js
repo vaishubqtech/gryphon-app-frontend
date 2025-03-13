@@ -4,8 +4,8 @@ const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 const serverCreatorURL = process.env.NEXT_PUBLIC_CREATOR_URL;
 
 
-const marketplace_url= "http://api.gryphon.finance/marketplace/"
-const ai_url= "http://api.gryphon.finance/ai/"
+const marketplace_url= "https://api.gryphon.finance/marketplace/"
+const ai_url= "https://api.gryphon.finance/ai/"
 
 
 // Marketplace API
