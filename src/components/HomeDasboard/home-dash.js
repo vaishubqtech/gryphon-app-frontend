@@ -94,7 +94,6 @@ const DashboardTable = () => {
         </button>
       </div>
 
-      <CandlestickChart/>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
