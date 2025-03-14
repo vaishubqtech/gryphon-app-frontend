@@ -6,8 +6,9 @@ import "../../styles/agentModal.css";
 import { createAgent } from "../../services/APIManager";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { approveFactory, createAgentSC, requiredGryphonAmount } from "../../services/gryphon-web3";
+import { approveFactory, LaunchAgent, requiredGryphonAmount } from "../../services/gryphon-web3";
 import { useNavigate } from "react-router-dom";
+import Web3 from "web3";
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -17,39 +18,26 @@ const CreateAgent = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [name, setName] = useState("");
   const [profileImage, setProfileImage] = useState("https://thumbs.dreamstime.com/b/image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-outlined-style-no-found-white-332183016.jpg");
-  const [erc20Address, setErc20Address] = useState("0x7A5f5CcD46EBd7aC30615836D988ca3BD57412b3 ");
+  const [erc20Address, setErc20Address] = useState(" ");
   const [ticker, setTicker] = useState("");
   const [bio, setBio] = useState("");
   const [agentType, setAgentType] = useState("");
   const [goal, setGoal] = useState("goal");
   const [personality, setPersonality] = useState("personality");
   const [niche, setNiche] = useState("niche");
+  const [purchaseAmount, setPurchaseAmt] = useState()
   const [gryphonAmountInWei, setGryphonAmountInWei] = useState()
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-
-
-  useEffect(() => {
-    reqAmountInWei()
-  }, [])
-
-
-  const reqAmountInWei = async () => {
-    try {
-      const reqAmountInWeiRes = await requiredGryphonAmount();
-      console.log("-----reqAmountInWeiRes-------", reqAmountInWeiRes.toString())
-      setGryphonAmountInWei(reqAmountInWeiRes.toString())
-    } catch (e) {
-      console.log("error in reqAmountInWei ", e)
-      return
-    }
-  }
+  const [telegram, setTelegram] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [website, setWebsite] = useState("");
+  const [youtube, setYoutube] = useState("");
 
   const approve_Factory = async () => {
     try {
 
-      const approveFactoryRes = await approveFactory(gryphonAmountInWei, walletAddress);
+      const approveFactoryRes = await approveFactory(Web3.utils.toWei(purchaseAmount, "ether"), walletAddress);
       console.log("-----approveFactoryRes-------", approveFactoryRes)
       if (approveFactoryRes) {
         await create_agent();
@@ -62,10 +50,19 @@ const CreateAgent = () => {
 
   const create_agent = async () => {
     try {
-      const createAgentRes = await createAgentSC(name,bio,name,ticker,walletAddress);
+
+      const createAgentRes = await LaunchAgent(name, ticker, [0, 1, 2, 3], bio, profileImage, twitter,telegram,youtube,website,Web3.utils.toWei(purchaseAmount, "ether"), walletAddress);
       console.log("-----createAgentRes-------", createAgentRes)
-      if(createAgentRes?.status){
-        await handleSubmit();
+      if (createAgentRes?.status) {
+        toast.success("Agent created successfully!", {
+          position: "top-right",
+          className: "copy-toast-message",
+        });
+        resetForm();
+      } else {
+        toast.error("Error in Launching agent", {
+          position: "top-right",
+        });
       }
     } catch (e) {
       console.log("error in create_agent ", e)
@@ -101,7 +98,7 @@ const CreateAgent = () => {
   };
 
 
-  const handleSubmit = async () => {   
+  const handleSubmit = async () => {
     setLoading(true);
     setMessage("");
 
@@ -146,6 +143,7 @@ const CreateAgent = () => {
   };
 
   const resetForm = () => {
+    setOpenCreateModal(false)
     setName("");
     setProfileImage("");
     setErc20Address("");
@@ -201,7 +199,7 @@ const CreateAgent = () => {
             value={agentType}
             onChange={(value) => setAgentType(value)}
           >
-            <Option value="None">None</Option>
+            <Option value="None" >None</Option>
             <Option value="on-chain">On-chain</Option>
             <Option value="informative">Informative</Option>
             <Option value="Productivity">Productivity</Option>
@@ -216,6 +214,43 @@ const CreateAgent = () => {
           </Upload>
         </div>
 
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Twitter</label>
+          <Input
+            value={twitter}
+            onChange={(e) => setTwitter(e.target.value)}
+            placeholder=" https://twitter.com/exampleuser/12345"
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Telegram</label>
+          <Input
+            value={telegram}
+            onChange={(e) => setTelegram(e.target.value)}
+            placeholder=" https://t.me/samplegroup"
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>YouTube</label>
+          <Input
+            value={youtube}
+            onChange={(e) => setYoutube(e.target.value)}
+            placeholder=" https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Website</label>
+          <Input
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            placeholder="https://sample-website.com"
+            className={styles.input}
+          />
+        </div>
+
         <div className={styles.disclaimer}>
           <p>
             <strong>Disclaimer:</strong> Avoid using third-party token lockers during the bonding stage, as it may lead to token loss. Instead, send tokens to Virtuals wallet
@@ -226,8 +261,8 @@ const CreateAgent = () => {
         <Button
           type="primary"
           className={styles.createButton}
-          // onClick={() => setOpenCreateModal(true)}
-          onClick={handleSubmit}
+          onClick={() => setOpenCreateModal(true)}
+          // onClick={handleSubmit}
 
           // onClick={submitWeb3}
           style={{ color: '#fff' }}
@@ -249,8 +284,8 @@ const CreateAgent = () => {
           </p>
 
           <div className="section">
-            <label className="section-title">VIRTUAL</label>
-            <input type="text" className="input" value="0" readOnly />
+            <label className="section-title">GRYPHON</label>
+            <input type="text" className="input" placeholder="Enter the amount of Gryphon" onChange={(e) => setPurchaseAmt(e.target.value)} />
             <p className="receive-info">You will receive 0 🦅 (0%)</p>
             <p className="trading-fee" >Trading Fee </p>
           </div>
@@ -272,7 +307,7 @@ const CreateAgent = () => {
           </div>
 
           <div className="buttons">
-            <button className="create-agent"  >
+            <button className="create-agent" onClick={submitWeb3} >
               Create Agent
             </button>
             <button className="cancel">Cancel</button>

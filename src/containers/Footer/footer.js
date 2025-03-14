@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/footer.css";
+import { getEllipsisTxt } from "../../utils/formatter";
 
 const Footer = () => {
   return (
@@ -19,7 +20,7 @@ const Footer = () => {
         <div className="footer-right">
           <span>Crypto data by CoinGecko</span>
           <div className="crypto-badge">
-            $GRYPHON <span className="crypto-address">0x0b3e...4E71b</span>
+            $GRYPHON <span className="crypto-address">{getEllipsisTxt("0x9CaD87d9741045eFCd101a443A9f6534Cc0A995F",5)}</span>
           </div>
         </div>
       </div>
