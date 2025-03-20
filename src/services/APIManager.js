@@ -18,8 +18,6 @@ export async function getNonce(publicAddress, chainId) {
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Headers" : "Content-Type",
-      "Access-Control-Allow-Origin": "*",
     },
     method: "POST",
     
@@ -52,8 +50,6 @@ export async function verifyUser(publicAddress, chainId, signature) {
   const config = {
     body: JSON.stringify(data),
     headers: {
-      "Access-Control-Allow-Headers" : "Content-Type",
-      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -85,8 +81,6 @@ export async function getProfile(token) {
     const response = await fetch(url, {
       method: 'GET', 
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`,
       },
@@ -110,7 +104,6 @@ export async function getProfile(token) {
 };
 
 
-
 // AI API
 export async function getAllAgents() {
   try {
@@ -118,8 +111,6 @@ export async function getAllAgents() {
       method: 'GET',
       
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
       },
     });
@@ -148,8 +139,6 @@ export async function getAgentById(agentId,token) {
       method: 'GET',
       
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`,
       },
@@ -181,8 +170,6 @@ export async function createAgent(agentData, token) {
       method: "POST",
       
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },

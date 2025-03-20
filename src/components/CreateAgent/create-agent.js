@@ -33,6 +33,49 @@ const CreateAgent = () => {
   const [twitter, setTwitter] = useState("");
   const [website, setWebsite] = useState("");
   const [youtube, setYoutube] = useState("");
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      setMessage("Please select a file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log("image File ", file)
+    try {
+      setUploading(true);
+      setMessage("");
+
+      const response = await fetch(
+        "http://api.gryphon.finance/ai/api/v1/upload/single",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        return result.data.url;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      setMessage("Upload failed. Please try again.");
+        return false;
+    } finally {
+      setUploading(false);
+    }
+  };
+
 
   const approve_Factory = async () => {
     try {
@@ -50,8 +93,15 @@ const CreateAgent = () => {
 
   const create_agent = async () => {
     try {
-
-      const createAgentRes = await LaunchAgent(name, ticker, [0, 1, 2, 3], bio, profileImage, twitter,telegram,youtube,website,Web3.utils.toWei(purchaseAmount, "ether"), walletAddress);
+       const imageUploadURL = await handleUpload();
+      if (!imageUploadURL){
+        setOpenCreateModal(false)
+        toast.error("Error in Uplaoading image", {
+          position: "top-right",
+        });
+        return;
+      }
+      const createAgentRes = await LaunchAgent(name, ticker, [0, 1, 2, 3], bio, imageUploadURL, twitter, telegram, youtube, website, Web3.utils.toWei(purchaseAmount, "ether"), walletAddress);
       console.log("-----createAgentRes-------", createAgentRes)
       if (createAgentRes?.status) {
         toast.success("Agent created successfully!", {
@@ -77,25 +127,7 @@ const CreateAgent = () => {
 
 
 
-  const handleUpload = ({ file }) => {
-    const actualFile = file.originFileObj || file; // Ensure we get the real file
-    console.log("--file--", file)
-    if (!actualFile || !(actualFile instanceof Blob)) {
-      console.error("Invalid file:", actualFile);
-      return;
-    }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(actualFile);
-    reader.onload = () => {
-      console.log("reader.result", reader.result); // Confirm reader.result is set
-      setProfileImage(reader.result);
-    };
-
-    reader.onerror = (error) => {
-      console.error("Error reading file:", error);
-    };
-  };
 
 
   const handleSubmit = async () => {
@@ -209,9 +241,19 @@ const CreateAgent = () => {
         </div>
         <div className={styles.formGroup}>
           <label className={styles.label}>AI Agent Profile Picture *</label>
-          <Upload beforeUpload={() => false} onChange={handleUpload}>
-            <Button icon={<UploadOutlined />}>Upload Picture</Button>
-          </Upload>
+          <input type="file" onChange={handleFileChange}/>
+            {/* <Button icon={<UploadOutlined />}>Upload Picture</Button> */}
+          {/* <div className="p-4 border rounded shadow">
+            <input type="file" onChange={handleFileChange} />
+            <button
+              onClick={handleUpload}
+              disabled={uploading}
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+            >
+              {uploading ? "Uploading..." : "Upload"}
+            </button>
+            {message && <p className="mt-2">{message}</p>}
+          </div> */}
         </div>
 
         <div className={styles.formGroup}>

@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Web3 from "web3";
 import { useActiveAccount } from "thirdweb/react";
 import { getNonce, verifyUser } from "../../services/APIManager";
+import LogoImage from "../../assets/Images/gryphon-logo.png"
 
 var decimalChainId;
 var publicAddress;
@@ -137,8 +138,9 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo} onClick={() => navigate("/")}>
-        <span className={styles.brand}>Gryphon</span>
-        <span className={styles.subtext}>PROTOCOL</span>
+        {/* <span className={styles.brand}>Gryphon</span>
+        <span className={styles.subtext}>PROTOCOL</span> */}
+        <img src={LogoImage} alt="logo-img" className={styles.LogoImageStyle} />
       </div>
 
       <ul className={styles.navLinks}>
